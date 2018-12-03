@@ -1,7 +1,8 @@
-# Facebook Business SDK for Java
 
-## Reasons for this Fork
-The SDK provides access to methods that allow an API Request to upload a File. Since we're running on appengine, we do not have access to the file system. Instead, we're given an input stream and size from the blobstore.
+## About this Fork
+This fork is based on the 3.2.3 release of facebook-java-business-sdk.
+
+The SDK provides access to methods that allow an API Request to upload a File. Since we're running on appengine, we do not have access to the file system. Instead, we have a byte array, a filename, and a size
 
 1. Created ByteArrayParam which allows us to specify a byte array, along with it's contentType and filename. Search for its usage in the APIRequest object to see our changes.
 1. Look at the AdAccount.addUploadBytes method, which is another place where the ByteArrayParam is used.
@@ -10,6 +11,8 @@ The SDK provides access to methods that allow an API Request to upload a File. S
 1. Make sure compiler and Project Facets are set to Java 1.8
 1. Change group id in pom.xml to com.eulerity
 1. Removed fields from AdSet which were causing whitelist errors (ad_keywords and full_funnel_exploration_mode)
+
+# Facebook Business SDK for Java
 
 **BREAKING CHANGES NOTES (v3.0.0)**: New Release for the Java SDK (v3.0.0) includes following breaking changes:
 
