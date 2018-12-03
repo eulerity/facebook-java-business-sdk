@@ -196,6 +196,8 @@ public class APIRequest<T extends APINode> {
     try {
       context.log("========Start of API Call========");
       response = executor.execute(method, getApiUrl(), getAllParams(extraParams), context);
+      context.log("Header:");
+      context.log(response.getHeader());
       context.log("Response:");
       context.log(response.getBody());
       context.log("========End of API Call========");
