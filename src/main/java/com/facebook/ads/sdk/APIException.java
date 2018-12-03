@@ -45,28 +45,23 @@ public class APIException extends Exception implements APIResponse {
     super(message, e);
   }
 
-  @Override
   public APINode head() {
     return null;
   }
 
-  @Override
   public APIException getException() {
     return this;
   }
 
-  @Override
   public String getRawResponse() {
     return this.getMessage();
   }
 
-  @Override
   public JsonObject getRawResponseAsJsonObject() {
     JsonParser parser = new JsonParser();
     return parser.parse(this.getMessage()).getAsJsonObject();
   }
 
-  @Override
   public String getHeader() {
     return null;
   }

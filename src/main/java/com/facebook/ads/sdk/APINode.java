@@ -74,12 +74,10 @@ public class APINode implements APIResponse {
     return rawValue;
   }
 
-  @Override
   public String getRawResponse() {
     return rawValue;
   }
 
-  @Override
   public JsonObject getRawResponseAsJsonObject() {
     JsonParser parser = new JsonParser();
     try {
@@ -89,17 +87,15 @@ public class APINode implements APIResponse {
     }
   }
 
-  @Override
   public APINode head() {
     return this;
   }
 
-  @Override
   public String getHeader() {
     return this.header;
   }
 
-  public static APINodeList<APINode> parseResponse(String json, APIContext context, APIRequest<APINode> request, String header) throws MalformedResponseException{
+  public static APINodeList parseResponse(String json, APIContext context, APIRequest<APINode> request, String header) throws MalformedResponseException{
     APINodeList<APINode> nodes = new APINodeList<APINode>(request, json, header);
     JsonArray arr;
     JsonObject obj;
@@ -193,7 +189,6 @@ public class APINode implements APIResponse {
     );
   }
 
-  @Override
   public APIException getException() {
     return null;
   }

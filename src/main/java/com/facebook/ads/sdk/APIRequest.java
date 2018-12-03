@@ -453,6 +453,16 @@ public class APIRequest<T extends APINode> {
           contentLength += getLengthAndLog(context, "\r\n");
           contentLength += file.length();
           contentLength += getLengthAndLog(context, "\r\n");
+        } else if (entry.getValue() instanceof ByteArrayParam) {
+	  ByteArrayParam param = (ByteArrayParam) entry.getValue();
+          String contentType = param.getContentType();
+          contentLength += getLengthAndLog(context, "Content-Disposition: form-data; name=\"" + entry.getKey() + "\"; filename=\"" + param.getName() + "\"\r\n");
+          if (contentType != null) {
+            contentLength += getLengthAndLog(context, "Content-Type: " + contentType + "\r\n");
+          }
+          contentLength += getLengthAndLog(context, "\r\n");
+          contentLength += param.getBytes().length;
+          contentLength += getLengthAndLog(context, "\r\n");
         } else if (entry.getValue() instanceof byte[]) {
           byte[] bytes = (byte[]) entry.getValue();
           contentLength += getLengthAndLog(context, "Content-Disposition: form-data; name=\"" + entry.getKey() + "\"; filename=\"" + "chunkfile" + "\"\r\n");
@@ -487,14 +497,12 @@ public class APIRequest<T extends APINode> {
       final SettableFuture<String> future = SettableFuture.create();
       client.newCall(request).enqueue(
         new okhttp3.Callback() {
-            @Override
             public void onFailure(final okhttp3.Call call, IOException e) {
                 future.setException(
                   new APIException.FailedRequestException(e)
                 );
             }
 
-            @Override
             public void onResponse(okhttp3.Call call, final okhttp3.Response response) throws IOException {
                 future.set(response.body().string());
             }
@@ -560,6 +568,11 @@ public class APIRequest<T extends APINode> {
           }
           writeStringInUTF8Bytes(wr, "\r\n");
           fileInputStream.close();
+        } else if (entry.getValue() instanceof ByteArrayParam) {
+	  ByteArrayParam param = (ByteArrayParam) entry.getValue();
+          writeStringInUTF8Bytes(wr, "Content-Disposition: form-data; name=\"" + entry.getKey() + "\"; filename=\"" + param.getName() + "\"\r\n\r\n");
+          wr.write(param.getBytes(), 0, param.getBytes().length);
+          writeStringInUTF8Bytes(wr, "\r\n");
         } else if (entry.getValue() instanceof byte[]) {
           byte[] bytes = (byte[]) entry.getValue();
           writeStringInUTF8Bytes(wr, "Content-Disposition: form-data; name=\"" + entry.getKey() + "\"; filename=\"" + "chunkfile" + "\"\r\n\r\n");
@@ -637,6 +650,12 @@ public class APIRequest<T extends APINode> {
             file.getName(),
             okhttp3.RequestBody.create(okhttp3.MediaType.parse(contentType), file)
           );
+        } else if (entry.getValue() instanceof ByteArrayParam) {
+	  ByteArrayParam param = (ByteArrayParam) entry.getValue();
+	  builder.addFormDataPart(
+	    entry.getKey(),
+	    param.getName(),
+	    okhttp3.RequestBody.create(okhttp3.MediaType.parse(param.getContentType()), param.getBytes()));
         } else if (entry.getValue() instanceof byte[]) {
           builder.addFormDataPart(
             entry.getKey(),

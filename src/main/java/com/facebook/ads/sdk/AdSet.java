@@ -4756,7 +4756,7 @@ public class AdSet extends APINode {
 
     public static final String[] FIELDS = {
       "account_id",
-      "ad_keywords",
+//      "ad_keywords",
       "adlabels",
       "adset_schedule",
       "asset_feed_id",
@@ -4781,7 +4781,7 @@ public class AdSet extends APINode {
       "effective_status",
       "end_time",
       "frequency_control_specs",
-      "full_funnel_exploration_mode",
+//      "full_funnel_exploration_mode",
       "id",
       "instagram_actor_id",
       "is_dynamic_creative",

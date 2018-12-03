@@ -4482,6 +4482,11 @@ public class AdAccount extends APINode {
       return this;
     }
 
+    public APIRequestCreateAdImage addUploadBytes (String uploadName, String filename, String contentType, byte[] bytes) {
+        this.setParam(uploadName, new ByteArrayParam(filename, contentType, bytes));
+        return this;
+      }
+
     public APIRequestCreateAdImage setUseVideoEndpoint(boolean useVideoEndpoint) {
       this.useVideoEndpoint = useVideoEndpoint;
       return this;

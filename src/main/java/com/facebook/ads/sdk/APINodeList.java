@@ -121,28 +121,23 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
       }
     }
 
-    @Override
     public String getRawResponse() {
       return rawValue;
     }
 
-    @Override
     public JsonObject getRawResponseAsJsonObject() {
       JsonParser parser = new JsonParser();
       return parser.parse(rawValue).getAsJsonObject();
     }
 
-    @Override
     public T head() {
       return this.size() > 0 ? this.get(0) : null;
     }
 
-    @Override
     public String getHeader() {
       return this.header;
     }
 
-    @Override
     public APIException getException() {
       return null;
     }
@@ -160,7 +155,6 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
         this.it = list.getCurrentListIterator();
       }
 
-      @Override
       public boolean hasNext() {
         if (it.hasNext()) {
           return true;
@@ -179,7 +173,6 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
         }
       }
 
-      @Override
       public T next() {
         return this.hasNext() ? it.next() : null;
       }
@@ -210,7 +203,6 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
           this.it = list.getCurrentListIterator();
         }
 
-        @Override
         public boolean tryAdvance(Consumer<? super T> action) {
           if (it.hasNext()) {
             action.accept(it.next());
@@ -236,7 +228,6 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
           }
         }
 
-        @Override
         public Spliterator<T> trySplit() {
           if (alreadySplit) {
             return null;
@@ -251,12 +242,10 @@ public class APINodeList<T extends APINode> extends ArrayList<T> implements APIR
           }
         }
 
-        @Override
         public long estimateSize() {
           return Integer.MAX_VALUE;
         }
 
-        @Override
         public int characteristics() {
           return Spliterator.IMMUTABLE;
         }
