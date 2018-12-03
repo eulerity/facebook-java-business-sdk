@@ -11,6 +11,7 @@ The SDK provides access to methods that allow an API Request to upload a File. S
 1. Make sure compiler and Project Facets are set to Java 1.8
 1. Change group id in pom.xml to com.eulerity
 1. Removed fields from AdSet which were causing whitelist errors (ad_keywords and full_funnel_exploration_mode)
+1. Disabled maven-gpg-plugin
 
 # Facebook Business SDK for Java
 
