@@ -11,6 +11,7 @@ So we've created ByteArrayParam which allows us to specify a byte array, along w
 1. Remove generic from parseResponse method
 1. Make sure compiler and Project Facets are set to Java 1.8
 1. Change group id in pom.xml to com.eulerity
+1. Removed fields from AdSet which were causing whitelist errors
 
 **BREAKING CHANGES NOTES (v3.0.0)**: New Release for the Java SDK (v3.0.0) includes following breaking changes:
 
