@@ -485,17 +485,6 @@ public class APIRequest<T extends APINode> {
 					contentLength += getLengthAndLog(context, "\r\n");
 					contentLength += file.length();
 					contentLength += getLengthAndLog(context, "\r\n");
-				} else if (entry.getValue() instanceof ByteArrayParam) {
-					ByteArrayParam param = (ByteArrayParam) entry.getValue();
-					String contentType = param.getContentType();
-					contentLength += getLengthAndLog(context, "Content-Disposition: form-data; name=\"" + entry.getKey()
-							+ "\"; filename=\"" + param.getName() + "\"\r\n");
-					if (contentType != null) {
-						contentLength += getLengthAndLog(context, "Content-Type: " + contentType + "\r\n");
-					}
-					contentLength += getLengthAndLog(context, "\r\n");
-					contentLength += param.getBytes().length;
-					contentLength += getLengthAndLog(context, "\r\n");
 				} else if (entry.getValue() instanceof byte[]) {
 					byte[] bytes = (byte[]) entry.getValue();
 					contentLength += getLengthAndLog(context, "Content-Disposition: form-data; name=\"" + entry.getKey()
@@ -611,12 +600,6 @@ public class APIRequest<T extends APINode> {
 					}
 					writeStringInUTF8Bytes(wr, "\r\n");
 					fileInputStream.close();
-				} else if (entry.getValue() instanceof ByteArrayParam) {
-					ByteArrayParam param = (ByteArrayParam) entry.getValue();
-					writeStringInUTF8Bytes(wr, "Content-Disposition: form-data; name=\"" + entry.getKey()
-							+ "\"; filename=\"" + param.getName() + "\"\r\n\r\n");
-					wr.write(param.getBytes(), 0, param.getBytes().length);
-					writeStringInUTF8Bytes(wr, "\r\n");
 				} else if (entry.getValue() instanceof byte[]) {
 					byte[] bytes = (byte[]) entry.getValue();
 					writeStringInUTF8Bytes(wr, "Content-Disposition: form-data; name=\"" + entry.getKey()
@@ -706,13 +689,6 @@ public class APIRequest<T extends APINode> {
 							entry.getKey(),
 							file.getName(),
 							okhttp3.RequestBody.create(okhttp3.MediaType.parse(contentType), file));
-				} else if (entry.getValue() instanceof ByteArrayParam) {
-					ByteArrayParam param = (ByteArrayParam) entry.getValue();
-					builder.addFormDataPart(
-							entry.getKey(),
-							param.getName(),
-							okhttp3.RequestBody.create(okhttp3.MediaType.parse(param.getContentType()),
-									param.getBytes()));
 				} else if (entry.getValue() instanceof byte[]) {
 					builder.addFormDataPart(
 							entry.getKey(),
