@@ -2,10 +2,8 @@
 ## About this Fork
 This fork is based on the 3.2.3 release of facebook-java-business-sdk.
 
-The SDK provides access to methods that allow an API Request to upload a File. Since we're running on appengine, we do not have access to the file system. Instead, we have a byte array, a filename, and a size
+### We should now be able to be explicit about fields we're requesting when fetching AdSet and stop using this fork.
 
-1. Created ByteArrayParam which allows us to specify a byte array, along with it's contentType and filename. Search for its usage in the APIRequest object to see our changes.
-1. Look at the AdAccount.addUploadBytes method, which is another place where the ByteArrayParam is used.
 1. Removed some @Override annotations which were giving us compiler warnings
 1. Remove generic from parseResponse method
 1. Make sure compiler and Project Facets are set to Java 1.8
